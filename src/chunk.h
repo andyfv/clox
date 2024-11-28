@@ -13,7 +13,17 @@ typedef enum {
 } OpCode;
 
 
-// Additional data along with the instructions (opcodes)
+/* Chunk is a sequence of bytecode
+    Along with the instructions (opcodes) there is some
+    additional data. Bytecode is a series of 
+    instructions. We store the bytecode in a dynamic array because
+    we don't know how big the array needs to be before
+    we start compiling.
+
+    @code     : dynamic array of bytes
+    @count    : number of entries in the array actually in use
+    @capacity : number of elements in the array
+*/
 typedef struct {
     uint8_t* code;
     int count;          // number of elements in the array 

@@ -13,12 +13,14 @@ current capacity
     : (capacity) * 2            \
     )
 
+// Macro that grows an array
 #define GROW_ARRAY(type, pointer, oldCount, newCount)  \
     (type*)reallocate( pointer                         \
                      , sizeof(type) * (oldCount)       \
                      , sizeof(type) * (newCount)       \
                      )
 
+// Macro that frees an array
 #define FREE_ARRAY(type, pointer, oldCount) \
     reallocate(pointer, sizeof(type) * (oldCount), 0)
 
