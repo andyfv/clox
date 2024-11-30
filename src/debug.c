@@ -8,6 +8,7 @@
 
 #include "debug.h"
 #include "chunk.h"
+#include "value.h"
 
 // Disassemble a whole chunk going through each instruction.
 void disassembleChunk(Chunk* chunk, const char *name) {
@@ -26,6 +27,16 @@ static int simpleInstruction(const char* name, int offset) {
     return offset + 1;
 }
 
+static int constantInstruction(const char* name, Chunk* chunk, int offset) {
+    uint8_t constant = chunk->code[offset + 1];
+    printf("%-16s %4d '", name, constant);
+    printValue(chunk->constants.values[constant]);
+    printf("'\n");
+    return offset + 2;      // Return the offset of the next instruction.
+                            // Here the offset is 2, one for the opCode
+                            // and one for the operand.
+}
+
 /* Disassemble a single instruction. 
     1) Print the byte offset of the instruction. This is telling us
         where in the chunk the instruction is.
@@ -38,6 +49,8 @@ int disassembleInstruction(Chunk *chunk, int offset) {
     uint8_t instruction = chunk->code[offset];
 
     switch (instruction) {
+        case OP_CONSTANT:
+            return constantInstruction("OP_CONSTANT", chunk, offset);
         case OP_RETURN:
             return simpleInstruction("OP_RETURN", offset);
         default:
