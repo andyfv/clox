@@ -31,6 +31,7 @@ typedef enum
     we start compiling.
 
     @code     : dynamic array of bytes
+    @constants: dynamic array of constants
     @count    : number of entries in the array actually in use
     @capacity : number of elements in the array
 */
