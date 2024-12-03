@@ -37,14 +37,15 @@ typedef enum
 */
 typedef struct {
     uint8_t*   code;
+    int*       lines;          // array holding the original line number for each bytecode 
     ValueArray constants;
     int        count;          // number of elements in the array 
     int        capacity;       // number of entries in use
 } Chunk;
 
 void initChunk(Chunk* chunk);
-void writeChunk(Chunk* chunk, uint8_t byte);
-int addConstant(Chunk* chunk, Value value);
+void writeChunk(Chunk* chunk, uint8_t byte, int line);
+int  addConstant(Chunk* chunk, Value value);
 void freeChunk(Chunk* chunk);
 
 #endif
